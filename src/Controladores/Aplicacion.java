@@ -82,7 +82,7 @@ public class Aplicacion {
 					do {
 						try {
 							System.out.print("ID: ");
-							idLibro = 2; //scn.nextInt(); 
+							idLibro = 2; //scn.nextLong(); 
 							System.out.println();
 							
 							System.out.print("Titulo: ");
@@ -92,7 +92,7 @@ public class Aplicacion {
 							System.out.print("Autor: ");
 							autor = "J. K. Rowling"; //scn.nextLine(); 
 							System.out.println();
-
+ 
 							System.out.print("Isbn: ");
 							isbn = "984652"; //scn.nextLine(); 
 							System.out.println();

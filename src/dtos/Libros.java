@@ -19,6 +19,7 @@ public class Libros {
 			this.edicion = edicion;
 		}
 		
+		public Libros() {}
 		
 		//Getters y setters
 

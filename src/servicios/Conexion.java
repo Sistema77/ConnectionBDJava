@@ -2,7 +2,7 @@ package servicios;
 
 import java.sql.*;
 
-public class Conexion {
+public class Conexion implements  ConexionInterface {
 	// Constructor
 	
 	public Conexion() {}
