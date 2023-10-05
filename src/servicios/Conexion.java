@@ -1,6 +1,8 @@
 package servicios;
 
+import java.io.*;
 import java.sql.*;
+import java.util.Properties;
 
 public class Conexion implements  ConexionInterface {
 	// Constructor
@@ -11,17 +13,14 @@ public class Conexion implements  ConexionInterface {
 	
 	public Connection generarConexion() {
 		// Inicializacion
-		
+		String[] parametrosConexion = configuracionConexion();
 		Connection conexion = null;
-		String url = "jdbc:postgresql://localhost:5432/gestorBibliotecaPersonal";
-	    String usuario = "postgres";
-	    String contrasena = "Admin";
 	    
 	    // Algoritmo
 	    
 	    try {
 	    	Class.forName("org.postgresql.Driver");
-            conexion = DriverManager.getConnection(url, usuario, contrasena);
+            conexion = DriverManager.getConnection(parametrosConexion[0] ,parametrosConexion[1],parametrosConexion[2]);
             System.out.println("Conexión exitosa a la base de datos.");
             
             return conexion;
@@ -47,5 +46,32 @@ public class Conexion implements  ConexionInterface {
                 System.err.println("Error al cerrar la conexión: " + e.getMessage());
             }
         }
+	}
+	
+	private String[] configuracionConexion() {
+		
+		String user="", pass="", port="", host="", db="", url="";
+		String[] stringConfiguracion = {"","",""};
+		
+		Properties propiedadesConexion = new Properties();
+		
+		try {
+			propiedadesConexion.load(new FileInputStream(new File("C:\\Users\\Puesto20\\eclipse-workspace\\ConnectionBDJAVA\\src\\Util\\conexion_postgresql.properties")));
+			user = propiedadesConexion.getProperty("user");
+			pass = propiedadesConexion.getProperty("pass");
+			port = propiedadesConexion.getProperty("port");
+			host = propiedadesConexion.getProperty("host");
+			db = propiedadesConexion.getProperty("db");
+			url = "jdbc:postgresql://" + host + ":" + port + "/" + db;
+			stringConfiguracion[0] = url;
+			stringConfiguracion[1] = user;
+			stringConfiguracion[2] = pass;
+		} catch (Exception e) {
+			System.err.println("[ERROR-Conexion-configuracionConexion] - Error al acceder al fichero propiedades de conexion.");
+			stringConfiguracion[0] = "";
+			stringConfiguracion[1] = "";
+			stringConfiguracion[2] = "";
+		}
+		return stringConfiguracion;
 	}
 }
